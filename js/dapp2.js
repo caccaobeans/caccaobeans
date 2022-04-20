@@ -41,18 +41,7 @@ window.addEventListener('load', function ()
 	}	
 
 });
-
-/*
-ethereumButton.addEventListener('click', () => {
-  getAccount();
-});
-
-async function getAccount() {
-  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-  const account = accounts[0];
-  //showAccount.innerHTML = account;
-}
-*/
+ 
 
 function anyUpdate() {
 	loadContract();
@@ -65,23 +54,10 @@ async function loadContract()
 	contract = new web3.eth.Contract(contractABI, contractAddress);
 	console.log('Contract Loaded: ' + contract);
 		
-    let num;
-//	await contract.methods.invested().call().then(function(result){ num = result; });
-//	let invested = web3.utils.fromWei(num, 'ether');
-//	$('#totalCurrencyInvested').html(parseFloat(invested).toFixed(5));
-	
-//	await contract.methods.ref_bonus().call().then(function(result){ num = result; });
-//	$('#totalReferralReward').html(parseFloat(web3.utils.fromWei(num, 'ether')).toFixed(5));
-	
-//	await contract.methods.withdrawn().call().then(function(result){ num = result; });
-//	let withdrawn = web3.utils.fromWei(num, 'ether');
-//	$('#withdrawn').html(parseFloat(withdrawn).toFixed(5));
-	
+    let num; 
 	let balance = await web3.eth.getBalance(contractAddress);
 	$('#contractBalance').html(parseFloat(web3.utils.fromWei(balance, 'ether')).toFixed(4));
-	contractLoaded = true;
-	
-	//setTimeout(reloadContract, 10000);
+	contractLoaded = true; 
 }
 
 
@@ -94,7 +70,7 @@ async function loadAccount()
 		$('#walletConnect').html(defaultAccount.substr(0,12)+'...');
 				
 	    if(spAccount == defaultAccount){
-	        spAccount = "0x5d571B636653298143D8FC748BF2931066b01D00";
+	        spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
 	    }
 	    
 		
@@ -105,32 +81,10 @@ async function loadAccount()
 		if(defaultAccount != prevAccount)
 		{
 			console.log('Account Changes: ' + defaultAccount);
-		}
-	    /*
-		await contract.methods.getMyWorkers(defaultAccount).call().then(function(result){ 
-			myBeans = result;    
-		    $('#my-beans').html(numberWithCommas(parseFloat(myBeans)));
-            console.log('my beans: ' + myBeans);    
-			
-			 $('#refLink').html('https://cacaobeans.cc/index.php?ref='+defaultAccount);
-		
-		});
-		
-		await contract.methods.chocolateRewards(defaultAccount).call().then(function(result){ 
-			availableBNB = web3.utils.fromWei(result);    
-		    $('#available-bnb').html( parseFloat(availableBNB).toFixed(4) );
-            console.log('my bnb: ' + availableBNB);
-		});
-		*/
+		} 
 		
 		
-		await contract.methods.accountInfo(defaultAccount).call().then(function(result){ 
-			
-			//availableBNB = web3.utils.fromWei(result[0]);    
-		    //$('#toWithdraw').html(parseFloat(availableBNB).toFixed(5) );
-            //$('#investedByUser').html(parseFloat(web3.utils.fromWei(result[1])).toFixed(5) );
-            //$('#withdrawalByUser').html(parseFloat(web3.utils.fromWei(result[2])).toFixed(5) );
-            //$('#refRewardForUser').html(parseFloat(web3.utils.fromWei(result[3])).toFixed(5) );
+		await contract.methods.accountInfo(defaultAccount).call().then(function(result){  
             console.log(result);
             
 			
@@ -147,25 +101,17 @@ async function loadAccount()
             console.log('my bnb: ' + availableBNB);
 			
 			if(myBeans > 0){
-                $('#refLink').html('https://cacaobeans.cc/index.php?ref='+defaultAccount);
+                $('#refLink').html('https://cacaobeans.fun/?ref='+defaultAccount);
 				
-				spAccount = result[0];
-				$('.promoseal-text').val('<a href="https://cacaobeans.cc/index.php?ref='+defaultAccount+'"> <img src="https://cacaobeans.cc/banners/cacaoseal.png" > https://cacaobeans.cc/index.php?ref='+defaultAccount+' </a>');
-			}
-            //var structure = result[4];
-            //for (let i = 0; i < structure.length; i++) {
-            //    $('#referralsCountAtLevel' + (i + 1)).html(structure[i])
-            //}
+				spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
+				$('.promoseal-text').val('<a href="https://cacaobeans.fun/?ref='+defaultAccount+'"> <img src="https://cacaobeans.cc/banners/cacaoseal.png" > https://cacaobeans.cc/index.php?ref='+defaultAccount+' </a>');
+			} 
                 
 		});	
 		
 		prevAccount = defaultAccount;
 		
-		console.log('SpAccount: '+spAccount);
-		
-	//} catch (error) {
-	//	console.log('Unable to load default account: '+error);
-	//}
+		console.log('SpAccount: '+spAccount); 
 
 }
 
@@ -249,54 +195,4 @@ function floorToSmaller (value, digitsAfterDot=CURRENCY_DIGITS_AFTER_DOT) {
 
 function floorToNumber (value, digitsAfterDot=CURRENCY_DIGITS_AFTER_DOT) {
     return Number.parseFloat(value.toFixed(digitsAfterDot))
-}        
-/*
-async function reInvest(amt)
-{
-	if(!web3 || defaultAccount == ''){
-		return false;
-	}
-	
-	if(amt > mycoins) { return false;}
-	$('#compound').attr('disabled', true);	
-	
-	try{
-		const sender = await contract.methods.reinvest(amt).send({from: defaultAccount})
-				.then(function(result){ 
-					location.reload();									
-				 }).catch(err => function(){
-					console.log(err);
-					$('#compound').attr('disabled', false)
-		});
-	}catch(err){
-		console.log(err);
-		$('#compound').attr('disabled', false)
-	}
-	
-}
-*/
-
-/*
-async function sellCoins(amt)
-{
-	if(!web3 || defaultAccount == ''){
-		return false;
-	}
-	
-	$('#sell').attr('disabled', true);	
-	
-	try{
-		const sender = await contract.methods.sellCoins(amt).send({from: defaultAccount, gas: 100000})
-				.then(function(result){ 
-					location.reload();									
-				 }).catch(err => function(){
-					console.log(err);
-					$('#sell').attr('disabled', false)
-		});
-	}catch(err){
-		console.log(err);
-		$('#sell').attr('disabled', false)
-	}
-	
-}
-*/
+}         
