@@ -1,4 +1,4 @@
-const contractAddress = "0xE2D26507981A4dAaaA8040bae1846C14E0Fb56bF";
+const contractAddress = "0x429fBd119AaBceBC2e433F429AC36ef38Ab85AbC";
 var spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
 
 let web3;
