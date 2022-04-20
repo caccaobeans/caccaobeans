@@ -53,8 +53,9 @@ async function getAccount() {
   //showAccount.innerHTML = account;
 }
 */
-loadContract();
+
 function anyUpdate() { 
+	loadContract();
 	loadAccount();	
 	setTimeout(anyUpdate, 3000)	
 } 
