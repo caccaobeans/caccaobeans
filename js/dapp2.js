@@ -1,5 +1,5 @@
 const contractAddress = "0xE2D26507981A4dAaaA8040bae1846C14E0Fb56bF";
-var spAccount = "0x5d571B636653298143D8FC748BF2931066b01D00";
+var spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
 
 let web3;
 var contract;
@@ -53,48 +53,34 @@ async function getAccount() {
   //showAccount.innerHTML = account;
 }
 */
-
-function anyUpdate() {
-	loadContract();
+loadContract();
+function anyUpdate() { 
 	loadAccount();	
-	setTimeout(anyUpdate, 10000)	
-}
-
+	setTimeout(anyUpdate, 3000)	
+} 
 async function loadContract()
 {
 	contract = new web3.eth.Contract(contractABI, contractAddress);
 	console.log('Contract Loaded: ' + contract);
 		
-    let num;
-//	await contract.methods.invested().call().then(function(result){ num = result; });
-//	let invested = web3.utils.fromWei(num, 'ether');
-//	$('#totalCurrencyInvested').html(parseFloat(invested).toFixed(5));
-	
-//	await contract.methods.ref_bonus().call().then(function(result){ num = result; });
-//	$('#totalReferralReward').html(parseFloat(web3.utils.fromWei(num, 'ether')).toFixed(5));
-	
-//	await contract.methods.withdrawn().call().then(function(result){ num = result; });
-//	let withdrawn = web3.utils.fromWei(num, 'ether');
-//	$('#withdrawn').html(parseFloat(withdrawn).toFixed(5));
+    let num; 
 	
 	let balance = await web3.eth.getBalance(contractAddress);
 	$('#contractBalance').html(parseFloat(web3.utils.fromWei(balance, 'ether')).toFixed(4));
-	contractLoaded = true;
+	contractLoaded = true; 
 	
-	//setTimeout(reloadContract, 10000);
 }
-
-
+ 
+	
 async function loadAccount()
-{
-	//try {
+{ 
 		let addrs = await window.ethereum.enable();
 		defaultAccount = web3.utils.toChecksumAddress(addrs[0]);
 		
 		$('#walletConnect').html(defaultAccount.substr(0,12)+'...');
 				
-	    if(spAccount == defaultAccount){
-	        spAccount = "0x5d571B636653298143D8FC748BF2931066b01D00";
+	    if(spAccount == defaultAccount && defaultAccount != "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7"){
+	        spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
 	    }
 	    
 		
@@ -106,72 +92,40 @@ async function loadAccount()
 		{
 			console.log('Account Changes: ' + defaultAccount);
 		} 
-
-		await contract.methods.getMyMiners(defaultAccount).call().then(function(result){ 
-			myBeans = result;    
-		    $('#my-workers').html(numberWithCommas(parseFloat(myBeans)));
-            console.log('my beans: ' + myBeans);     
-		
-		});
-		// await contract.methods.getMyWorkers(defaultAccount).call().then(function(result){ 
-		// 	myBeans = result;    
-		//     $('#my-workers').html(numberWithCommas(parseFloat(myBeans)));
-        //     console.log('my beans: ' + myBeans);     
-		
-		// });
-		
-		// await contract.methods.getMyBeans(defaultAccount).call().then(function(result){ 
-		// 	availableBNB = web3.utils.fromWei(result);    
-		//     $('#available-bnb').html( parseFloat(availableBNB).toFixed(4) );
-        //     console.log('my bnb: ' + availableBNB);
-		// });
-		 
 		
 		
-		// await contract.methods.accountInfo(defaultAccount).call().then(function(result){ 
-			
-		// 	//availableBNB = web3.utils.fromWei(result[0]);    
-		//     //$('#toWithdraw').html(parseFloat(availableBNB).toFixed(5) );
-        //     //$('#investedByUser').html(parseFloat(web3.utils.fromWei(result[1])).toFixed(5) );
-        //     //$('#withdrawalByUser').html(parseFloat(web3.utils.fromWei(result[2])).toFixed(5) );
-        //     //$('#refRewardForUser').html(parseFloat(web3.utils.fromWei(result[3])).toFixed(5) );
-        //     console.log(result);
+		await contract.methods.accountInfo(defaultAccount).call().then(function(result){  
+            console.log(result);
             
 			
-		// 	let workers = result[1]; //workers actually    
-		//     $('#my-workers').html(numberWithCommas(parseFloat(workers)));
-        //     console.log('my workers: ' + workers);    
+			let workers = result[1]; //workers actually    
+		    $('#my-workers').html(numberWithCommas(parseFloat(workers)));
+            console.log('my workers: ' + workers);    
 			
-		// 	myBeans = result[2]; //workers actually    
-		//     $('#my-beans').html(numberWithCommas(parseFloat(myBeans)));
-        //     console.log('my beans: ' + myBeans);    
+			myBeans = result[2]; //workers actually    
+		    $('#my-beans').html(numberWithCommas(parseFloat(myBeans)));
+            console.log('my beans: ' + myBeans);     
+			availableBNB = web3.utils.fromWei(result[3]);    
+		    $('#available-bnb').html( parseFloat(availableBNB).toFixed(4) );
+            console.log('my bnb: ' + availableBNB);
 			
-		// 	availableBNB = web3.utils.fromWei(result[3]);    
-		//     $('#available-bnb').html( parseFloat(availableBNB).toFixed(4) );
-        //     console.log('my bnb: ' + availableBNB);
+			if(myBeans > 0){
+                $('#refLink').html('https://cacaobeans.cc/index.php?ref='+defaultAccount);  
+				$('.promoseal-text').val('<a href="https://cacaobeans.cc/index.php?ref='+defaultAccount+'"> <img src="https://cacaobeans.cc/banners/cacaoseal.png" > https://cacaobeans.cc/index.php?ref='+defaultAccount+' </a>');
+			if(defaultAccount != "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7"){
+				spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
+			}			
+}
 			
-		// 	if(myBeans > 0){
-        //         $('#refLink').html('https://cacaobeans.cc/index.php?ref='+defaultAccount);
-				
-		// 		spAccount = result[0];
-				
-		// 	}
-        //     //var structure = result[4];
-        //     //for (let i = 0; i < structure.length; i++) {
-        //     //    $('#referralsCountAtLevel' + (i + 1)).html(structure[i])
-        //     //}
-                
-		// });	
+
+		});	
 		
 		prevAccount = defaultAccount;
 		
-		console.log('SpAccount: '+spAccount);
-		
-	//} catch (error) {
-	//	console.log('Unable to load default account: '+error);
-	//}
+		console.log('SpAccount: '+spAccount); 
 
 }
+
 
 async function buyBeans()
 {
