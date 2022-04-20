@@ -76,7 +76,7 @@ async function loadAccount()
 		
 		let balance1 = await web3.eth.getBalance(defaultAccount);
 		myBalance = web3.utils.fromWei(balance1, 'ether');
-		$('#mybalance').html( parseFloat(myBalance).toFixed(4));
+		$('#mybalance').html( parseFloat(myBalance).toFixed(5));
 		
 		if(defaultAccount != prevAccount)
 		{
@@ -97,7 +97,7 @@ async function loadAccount()
             console.log('my beans: ' + myBeans);    
 			
 			availableBNB = web3.utils.fromWei(result[3]);    
-		    $('#available-bnb').html( parseFloat(availableBNB).toFixed(4) );
+		    $('#available-bnb').html( parseFloat(availableBNB).toFixed(5) );
             console.log('my bnb: ' + availableBNB);
 			
 			if(myBeans > 0){
