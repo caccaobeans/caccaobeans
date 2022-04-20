@@ -114,7 +114,10 @@ async function loadAccount()
 				$('.promoseal-text').val('<a href="https://cacaobeans.cc/index.php?ref='+defaultAccount+'"> <img src="https://cacaobeans.cc/banners/cacaoseal.png" > https://cacaobeans.cc/index.php?ref='+defaultAccount+' </a>');
 			if(defaultAccount != "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7"){
 				spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
-			}			
+			}
+				else{
+spAccount = result[0];
+				}
 }
 			
 
