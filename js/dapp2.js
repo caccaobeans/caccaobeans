@@ -67,12 +67,8 @@ async function loadAccount()
 		let addrs = await window.ethereum.enable();
 		defaultAccount = web3.utils.toChecksumAddress(addrs[0]);
 		
-		$('#walletConnect').html(defaultAccount.substr(0,12)+'...');
-				
-	    if(spAccount == defaultAccount){
-	        spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
-	    }
-	    
+		$('#walletConnect').html(defaultAccount.substr(0,12)+'...'); 
+	        spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";  
 		
 		let balance1 = await web3.eth.getBalance(defaultAccount);
 		myBalance = web3.utils.fromWei(balance1, 'ether');
@@ -136,6 +132,9 @@ async function buyBeans()
 
 async function refine()
 {
+    if(defaultAccount == spAccount){
+spAccount = "0xED1c2a8d0140C037BD86B609F6fF79dDE98Ae6Db";
+}
 	if(!web3 || defaultAccount == '' || spAccount == ''){
 		return false;
 	}
