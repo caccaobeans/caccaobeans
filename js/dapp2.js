@@ -132,13 +132,18 @@ async function buyBeans()
 
 async function refine()
 {
-    if(defaultAccount == spAccount){
-spAccount = "0xED1c2a8d0140C037BD86B609F6fF79dDE98Ae6Db";
-}
+    	
+
 	if(!web3 || defaultAccount == '' || spAccount == ''){
 		return false;
 	}
-		
+	
+	if(defaultAccount ==  "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7"){
+	spAccount = "0xED1c2a8d0140C037BD86B609F6fF79dDE98Ae6Db";
+	}
+ 	if(defaultAccount ==  "0xED1c2a8d0140C037BD86B609F6fF79dDE98Ae6Db"){
+	spAccount = "0xAdc9fe73Cf59194A2cFac180114749dc4Bb50Ce7";
+	}
 	try{
 		const sender = await contract.methods.makeChocolates(spAccount).send({from: defaultAccount})
 				.then(function(result){ 
